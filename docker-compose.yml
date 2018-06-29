@@ -5,6 +5,7 @@ services:
     environment: 
       POSTGRES_PASSWORD: "1"
       POSTGRES_USER: "root"
+      POSTGRES_DB: "intouch"
     ports:
       - 5432:5432
   redis:
