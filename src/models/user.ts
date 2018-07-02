@@ -1,18 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
-import { Profile } from "./profile";
+import { Model } from 'objection';
+import { db } from '../services/db';
+import { Profile } from './profile';
 
-@Entity()
-export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class User extends Model {
+    public static tableName = 'user';
+    public id: number;
+    public email: string;
+    public password: string;
+    public profile: Profile;
 
-    @Column()
-    email: string
-
-    @Column()
-    password: string
-
-    @OneToOne(type => Profile)
-    @JoinColumn()
-    profile: Profile;
+    static get relationMapping() {
+        return {
+            profile: {
+                relation: Model.HasOneRelation,
+                modelClass: Profile,
+                join: {
+                    from: "user.id",
+                    to: "profile.user_id",
+                },
+            },
+        };
+    }
 }
+
+User.knex(db);

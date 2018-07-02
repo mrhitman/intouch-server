@@ -1,22 +1,14 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { Model } from 'objection';
+import { db } from '../services/db';
 
-@Entity()
-export class Profile {
-    @PrimaryGeneratedColumn()
-    id: number;
-
-    @Column()
-    firstName: string;
-
-    @Column()
-    lastName: string;
-
-    @Column()
-    birthday: number;
-
-    @Column()
-    photo: string;
-
-    @Column()
-    quote: string;
+export class Profile extends Model {
+    public static tableName = 'profile';
+    public user_id: number;
+    public first_name: string;
+    public last_name: string;
+    public birthday: number;
+    public photo: string;
+    public quote: string;
 }
+
+Profile.knex(db);
