@@ -3,11 +3,7 @@ import { User } from '../../models/user';
 import { Friend } from '../../models/friend';
 
 export default async (req, res, next) => {
-    const id = parseInt(req.query.id);
-
-    if (!id) {
-       return next(new Error('No user id param'));
-    }
+    const id = parseInt(req.params.id);
 
     const friends = await Friend
         .query()

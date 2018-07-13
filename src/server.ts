@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/user', require('./routes/user').default);
+app.use('/friend', require('./routes/friend').default);
 app.get('//', (_, res) => {
     res.json('ok');
 });
