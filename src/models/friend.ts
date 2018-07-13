@@ -5,7 +5,11 @@ export class Friend extends Model {
     public static tableName = 'friend';
     public user_id: number;
     public friend_user_id: number;
-    public deleted: string;
+    public deleted: number;
+
+    static get idColumn() {
+      return ['user_id', 'friend_user_id'];
+    }
 
     static get jsonSchema() {
         const properties = {
