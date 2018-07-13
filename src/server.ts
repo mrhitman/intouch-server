@@ -2,7 +2,7 @@ require("dotenv").config();
 
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import * as cors from "cors";
+import * as cors from 'cors';
 
 const app = express();
 
@@ -12,9 +12,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/user', require('./routes/user').default);
+app.get('//', (_, res) => {
+    res.json('ok');
+});
+app.use((err, req, res, next) => {
+    res.status(400);
+    res.json({ error: err.message });
+});
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 3000, () => console.log('server up'));
 
 process.on("unhandledRejection", (reason, p) => {
-    console.log("Unhandled Rejection at: Promise", p, "reason:", reason);
+    global.console.log("Unhandled Rejection at: Promise", p, "reason:", reason);
 });

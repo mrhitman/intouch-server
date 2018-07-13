@@ -1,6 +1,7 @@
 import { Model } from 'objection';
 import { db } from '../services/db';
 import { Profile } from './profile';
+import { Friend } from './friend';
 
 export class User extends Model {
     public static tableName = 'user';
@@ -9,7 +10,7 @@ export class User extends Model {
     public password: string;
     public profile: Profile;
 
-    static get relationMapping() {
+    static get relationMappings() {
         return {
             profile: {
                 relation: Model.HasOneRelation,
@@ -18,7 +19,7 @@ export class User extends Model {
                     from: "user.id",
                     to: "profile.user_id",
                 },
-            },
+            }
         };
     }
 }

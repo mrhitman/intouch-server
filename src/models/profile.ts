@@ -8,7 +8,6 @@ export class Profile extends Model {
     public last_name: string;
     public birthday: number;
     public photo: string;
-    public quote: string;
 }
 
 Profile.knex(db);
