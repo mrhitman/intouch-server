@@ -1,7 +1,6 @@
 import { Model } from 'objection';
 import { db } from '../services/db';
 import { Profile } from './profile';
-import { Friend } from './friend';
 
 export class User extends Model {
     public static tableName = 'user';
