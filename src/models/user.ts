@@ -8,6 +8,7 @@ export class User extends Model {
     public email: string;
     public password: string;
     public profile: Profile;
+    public created_at: number;
 
     static get relationMappings() {
         return {

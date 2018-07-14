@@ -7,13 +7,16 @@
   "scripts": {
     "start": "node dist/server.js",
     "start:dev": "nodemon dist/server.js",
-    "compile": "tsc"
+    "compile": "tsc",
+    "create-migration": "knex migrate:make",
+    "migrate": "knex migrate:latest"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
     "knex": "^0.14.6",
     "objection": "^1.1.10",
     "pg": "^7.4.3",
