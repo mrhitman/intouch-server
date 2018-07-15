@@ -4,7 +4,7 @@ import { User } from '../models/user';
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'salt'
+    secretOrKey: process.env.SALT
 };
 
 export default passport => {

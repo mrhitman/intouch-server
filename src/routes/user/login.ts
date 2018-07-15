@@ -14,7 +14,7 @@ export default async (req, res, next) => {
     }
     const token = jwt.sign({
         id: user.id
-    }, 'salt', {expiresIn: '1h'});
+    }, process.env.SALT, {expiresIn: '1h'});
 
     res.json({
         token: `Bearer ${token}`,
