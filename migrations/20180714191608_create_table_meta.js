@@ -1,11 +1,11 @@
 const tableName = 'meta';
 
 exports.up = knex => knex.schema.createTable(tableName, (table) => {
-  table.specificType('item_id', 'INT NOT NULL').primary();
-  table.specificType('likes', 'INT NOT NULL');
-  table.specificType('views', 'INT NOT NULL');
-  table.specificType('created_at', 'INT NOT NULL');
-  table.specificType('updated_at', 'INT NOT NULL');
+  table.specificType('item_id', 'INT').notNullable().primary();
+  table.specificType('likes', 'INT').notNullable();
+  table.specificType('views', 'INT').notNullable();
+  table.specificType('created_at', 'INT').notNullable();
+  table.specificType('updated_at', 'INT').notNullable();
 });
 
 exports.down = knex => knex.dropTable(tableName);
