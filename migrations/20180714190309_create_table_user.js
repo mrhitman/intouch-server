@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const tableName = 'user';
 
 exports.up = knex => knex.schema.createTable(tableName, (table) => {
