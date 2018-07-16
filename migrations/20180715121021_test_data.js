@@ -1,10 +1,19 @@
-const today = Math.floor(new Date().getTime()/1000);
+const today = Math.floor(new Date().getTime() / 1000);
 exports.up = knex => Promise.all([
     knex.insert(
         {id: 1, email: 'test@test.com', password: '1', created_at: today}
     ).into('user'),
     knex.insert(
-        {user_id: 1, first_name: 'Test', last_name: 'Test', birthday: today - 20*365*24*60*60, photo: ''}
+        {
+            user_id: 1,
+            first_name: 'Test',
+            last_name: 'Test',
+            birthday: today - 20*365*24*60*60,
+            photo: '',
+            town: 'Some town',
+            company: 'Some company',
+            quote: 'Do every day and win'
+        }
     ).into('profile'),
 ]);
 
