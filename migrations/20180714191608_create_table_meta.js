@@ -8,4 +8,4 @@ exports.up = knex => knex.schema.createTable(tableName, (table) => {
   table.specificType('updated_at', 'INT').notNullable();
 });
 
-exports.down = knex => knex.dropTable(tableName);
+exports.down = knex => knex.schema.dropTable(tableName);

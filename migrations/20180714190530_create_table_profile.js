@@ -12,4 +12,4 @@ exports.up = knex => knex.schema.createTable(tableName, (table) => {
   table.specificType('quote', 'VARCHAR(255)');
 });
 
-exports.down = knex => knex.dropTable(tableName);
+exports.down = knex => knex.schema.dropTable(tableName);

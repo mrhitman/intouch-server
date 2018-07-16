@@ -7,4 +7,4 @@ exports.up = knex => knex.schema.createTable(tableName, (table) => {
   table.specificType('content', 'VARCHAR(255)').notNullable();
 });
 
-exports.down = knex => knex.dropTable(tableName);
+exports.down = knex => knex.schema.dropTable(tableName);

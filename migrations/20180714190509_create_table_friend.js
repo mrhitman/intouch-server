@@ -7,4 +7,4 @@ exports.up = knex => knex.schema.createTable(tableName, (table) => {
   table.unique(['user_id', 'friend_user_id']);
 });
 
-exports.down = knex => knex.dropTable(tableName);
+exports.down = knex => knex.schema.dropTable(tableName);
