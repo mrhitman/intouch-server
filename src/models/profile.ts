@@ -19,7 +19,7 @@ export class Profile extends Model {
             name: `${this.first_name} ${this.last_name}`,
             first_name: this.first_name,
             last_name: this.last_name,
-            birthday: moment(this.birthday).format('Y/m/d'),
+            birthday: moment(this.birthday).format('YYYY/MMMM/Do'),
             town: this.town,
             company: this.company,
             language: this.language,
