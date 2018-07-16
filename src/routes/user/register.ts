@@ -7,11 +7,10 @@ export default async (req, res) => {
     const password = req.body.password;
     let hash = crypto.createHmac('sha256', process.env.SALT);
     hash.update(password);
+
     const user = await User.query()
-        .insert({
-            email,
-            password: hash.digest('hex'),
-        });
+        .insert({ email, password: hash.digest('hex') });
+
     const profile = await Profile.query()
         .insert({
             user_id: user.id,
@@ -19,6 +18,7 @@ export default async (req, res) => {
             last_name: req.body.last_name,
             birthday: req.body.birthday,
         });
+
     user.profile = profile;
     res.json(user);
 };

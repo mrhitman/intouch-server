@@ -10,9 +10,9 @@ export default async (req, res, next) => {
         .where({ user_id: id })
         .orWhere({ friend_user_id: id });
 
-    const followerIds = filter(map(friends, 'user_id'), (user_id) => user_id !== id);
-    const followingIds = filter(map(friends, 'friend_user_id'), (user_id) => user_id !== id);
-    const friendIds = filter(intersection(followerIds, followingIds), (user_id) => user_id !== id);
+    const followerIds = filter(map(friends, 'user_id'), user_id => user_id !== id);
+    const followingIds = filter(map(friends, 'friend_user_id'), user_id => user_id !== id);
+    const friendIds = filter(intersection(followerIds, followingIds), user_id => user_id !== id);
 
     const users = await User
         .query()
@@ -22,8 +22,8 @@ export default async (req, res, next) => {
         .orWhereIn('id', followingIds);
 
     res.json({
-        followers: filter(users, (user) => followerIds.lastIndexOf(user.id) !== -1 && friendIds.lastIndexOf(user.id) === -1),
-        followings: filter(users, (user) => followingIds.lastIndexOf(user.id) !== -1 && friendIds.lastIndexOf(user.id) === -1),
-        friends: filter(users, (user) => friendIds.lastIndexOf(user.id) !== -1),
+        followers: filter(users, user => followerIds.lastIndexOf(user.id) !== -1 && friendIds.lastIndexOf(user.id) === -1),
+        followings: filter(users, user => followingIds.lastIndexOf(user.id) !== -1 && friendIds.lastIndexOf(user.id) === -1),
+        friends: filter(users, user => friendIds.lastIndexOf(user.id) !== -1),
     });
 };
