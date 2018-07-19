@@ -12,3 +12,14 @@ services:
     image: redis:alpine
     ports:
       - 6379:6379
+  node:
+    image: node:alpine
+    working_dir: /opt
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - .:/opt
+    ports:
+      - 3001:3001
+    command: node dist/server.js
