@@ -5,7 +5,7 @@ const router = Router();
 
 router.post('/login', require('./login').default);
 router.get('/logout', require('./logout').default);
-router.get('/register', require('./register').default);
+router.post('/register', require('./register').default);
 router.route('/profile/:id')
     .get(require('./get-profile').default)
     .post(require('./update-profile').default);
