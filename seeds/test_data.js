@@ -1,11 +1,15 @@
 const profile = {
   first_name: 'Test',
+  middle_name: 'Test',
   last_name: 'Test',
+  gender: 0,
   birthday: 567997261,
   photo: '',
   town: 'Some town',
   company: 'Some company',
-  quote: 'Do every day and win'
+  quote: 'Do every day and win',
+  hobbies: '',
+  priorities: '',
 };
 
 const today = Math.floor(new Date().getTime() / 1000);
