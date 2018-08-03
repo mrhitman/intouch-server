@@ -6,6 +6,7 @@ export class User extends Model {
     public static tableName = 'user';
     public id: number;
     public email: string;
+    public phone: string;
     public password: string;
     public profile: Profile;
     public created_at: number;
@@ -14,6 +15,7 @@ export class User extends Model {
         return {
             id: this.id,
             email: this.email,
+            phone: this.phone,
             created_at: this.created_at,
             profile: this.profile
         }

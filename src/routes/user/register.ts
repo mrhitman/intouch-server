@@ -1,6 +1,7 @@
 import * as crypto from 'crypto';
-import { User } from '../../models/user';
+import * as moment from 'moment';
 import { Profile } from '../../models/profile';
+import { User } from '../../models/user';
 
 export default async (req, res) => {
     const email = req.body.email;
@@ -16,8 +17,9 @@ export default async (req, res) => {
         .insert({
             user_id: id,
             first_name: req.body.first_name,
+            middle_name: req.body.middle_name,
             last_name: req.body.last_name,
-            birthday: req.body.birthday,
+            birthday: moment(req.body.birthday).unix(),
         });
 
     user.profile = profile;

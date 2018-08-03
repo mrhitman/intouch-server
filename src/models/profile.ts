@@ -16,6 +16,7 @@ export class Profile extends Model {
     public gender: Gender;
     public birthday: number;
     public town: string;
+    public relationship: number;
     public company: string;
     public language: string;
     public hobbies: string;
@@ -25,12 +26,13 @@ export class Profile extends Model {
 
     toJSON() {
         return {
-            name: `${this.first_name} ${this.last_name}`,
+            name: `${this.first_name} ${this.middle_name}`,
             first_name: this.first_name,
             middle_name: this.middle_name,
             last_name: this.last_name,
             gender: this.gender,
             birthday: moment(this.birthday * 1000).format('YYYY/MMMM/Do'),
+            relationship: this.relationship,
             town: this.town,
             company: this.company,
             language: this.language,
