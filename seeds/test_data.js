@@ -18,9 +18,9 @@ exports.seed = knex => {
   return knex('user').del()
     .then(() => {
       return knex('user').insert([
-        { id: 1, email: 'test@test.com', password: '1', created_at: today },
-        { id: 2, email: 'test1@test.com', password: '1', created_at: today },
-        { id: 4, email: 'test2@test.com', password: '1', created_at: today }
+        { id: 1, email: 'test@test.com', password: '27f28425655b50a04464947b1b1808c1bece11b672be621f359d95b67496f492', created_at: today },
+        { id: 2, email: 'test1@test.com', password: '27f28425655b50a04464947b1b1808c1bece11b672be621f359d95b67496f492', created_at: today },
+        { id: 4, email: 'test2@test.com', password: '27f28425655b50a04464947b1b1808c1bece11b672be621f359d95b67496f492', created_at: today }
       ]);
     })
     .then(() => {
