@@ -9,6 +9,7 @@ enum Gender {
 
 export class Profile extends Model {
     public static tableName = 'profile';
+    public static idColumn = 'user_id';
     public user_id: number;
     public first_name: string;
     public middle_name: string;

@@ -12,14 +12,14 @@ services:
     image: redis:alpine
     ports:
       - 6379:6379
-  node:
-    image: keymetrics/pm2:latest-alpine
-    working_dir: /opt
-    depends_on:
-      - redis
-      - db
-    volumes:
-      - .:/opt
-    ports:
-      - 3001:3001
-    command: pm2-docker start dist/server.js -i 1 --watch
+  # node:
+  #   image: keymetrics/pm2:latest-alpine
+  #   working_dir: /opt
+  #   depends_on:
+  #     - redis
+  #     - db
+  #   volumes:
+  #     - .:/opt
+  #   ports:
+  #     - 3001:3001
+  #   command: pm2-docker start dist/server.js -i 1 --watch
