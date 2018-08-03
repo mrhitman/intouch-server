@@ -1,6 +1,6 @@
+import * as moment from 'moment';
 import { Model } from 'objection';
 import { db } from '../services/db';
-import * as moment from 'moment';
 
 enum Gender {
     female = 0,
