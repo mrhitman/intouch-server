@@ -21,9 +21,17 @@ export default async (req, res, next) => {
         .whereIn('id', followerIds)
         .orWhereIn('id', followingIds);
 
+    const recommendUsers = await User
+        .query()
+        .eager({ profile: true })
+        .whereNot('id', id)
+        .whereNotIn('id', followerIds)
+        .whereNotIn('id', followingIds);
+
     res.json({
         followers: filter(users, user => followerIds.lastIndexOf(user.id) !== -1 && friendIds.lastIndexOf(user.id) === -1),
         followings: filter(users, user => followingIds.lastIndexOf(user.id) !== -1 && friendIds.lastIndexOf(user.id) === -1),
         friends: filter(users, user => friendIds.lastIndexOf(user.id) !== -1),
+        recommendUsers,
     });
 };

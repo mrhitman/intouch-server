@@ -7,6 +7,10 @@ export default async (req, res, next) => {
         .query()
         .eager({ profile: true })
         .where({ id });
-
+    if (!user.length) {
+        return res
+            .status(404)
+            .end();
+    }
     res.json(user);
 };
