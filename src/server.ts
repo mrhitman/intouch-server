@@ -1,26 +1,18 @@
 require("dotenv").config();
 
-import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
-import * as passport from 'passport';
-import * as morgan from 'morgan';
-import * as WebSocket from 'ws';
+import * as express from 'express';
 import * as http from 'http';
+import * as morgan from 'morgan';
+import * as passport from 'passport';
+import Chat from './services/chat';
+
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
 
-wss.on('connection', (ws: WebSocket) => {
-
-    ws.on('message', (message: string) => {
-        ws.send(JSON.stringify({ text: 'ok' }));
-    });
-
-    ws.send(JSON.stringify({ text: 'Welcome to chat!' }));
-});
-
+new Chat(server);
 app.set("x-powered-by", false);
 app.use(cors());
 app.use(morgan('tiny'));
