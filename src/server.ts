@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 require('./middlewares/passport').default(passport);
 
+app.use('/chat', require('./routes/chat').default);
 app.use('/user', require('./routes/user').default);
 app.use('/friend', require('./routes/friend').default);
 app.get('//', (_, res) => {

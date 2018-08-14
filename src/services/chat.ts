@@ -1,15 +1,12 @@
 
 import * as redis from 'redis';
 import * as WebSocket from 'ws';
+import { Message } from '../models/message';
+import * as moment from 'moment';
+import { Channel } from '../models/channel';
 
 const publisher = redis.createClient();
 const subscriber = redis.createClient();
-
-interface Message {
-    from: number;
-    to?: number;
-    text: String;
-}
 
 class Client {
     constructor(protected readonly id: number, protected readonly socket: WebSocket, protected readonly chat: Chat) {
@@ -25,8 +22,25 @@ class Client {
         delete this.chat.clients[this.id];
     };
 
-    send(message) {
-        console.log('message from', message.from, 'to', this.id, message.text, message.name);
+    async send(message) {
+        let channel = await Channel
+            .query()
+            .findOne({ from: this.id, to: message.from });
+
+        if (!channel) {
+            channel = await Channel
+                .query()
+                .insert({ from: this.id, to: message.from });
+        }
+
+        await Message.query()
+            .insert({
+                from: message.from,
+                to: this.id,
+                text: message.text,
+                created_at: moment.now(),
+                viewed: false,
+            })
         this.socket.send(JSON.stringify(message));
     }
 }
@@ -42,7 +56,7 @@ class Chat {
 
         subscriber.subscribe('messages');
         subscriber.on('message', (channel, data) => {
-            const message: Message = JSON.parse(data);
+            const message = JSON.parse(data);
             const client = this.clients[message.to];
             if (client) {
                 client.send(message);
@@ -52,7 +66,7 @@ class Chat {
 
     onConnect = (ws: WebSocket) => {
         ws.on('message', (data) => {
-            const message: Message = JSON.parse(data);
+            const message = JSON.parse(data);
             if (message.text === 'auth') {
                 const client = new Client(message.from, ws, this);
                 this.clients[message.from] = client;
