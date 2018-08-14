@@ -7,6 +7,14 @@ export class Channel extends Model {
     public id: number;
     public from: number;
     public to: number;
+    public interlocutor: Profile;
+
+    toJSON() {
+        return {
+            id: this.to,
+            name: `${this.interlocutor.first_name} ${this.interlocutor.last_name}`,
+        }
+    }
 
     static get relationMappings() {
         return {
@@ -20,6 +28,7 @@ export class Channel extends Model {
             }
         };
     }
+
 }
 
 Channel.knex(db);
