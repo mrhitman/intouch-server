@@ -15,8 +15,9 @@
     "postinstall": "yarn compile && yarn migrate && yarn seed"
   },
   "engines": {
-    "node": ">=8.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=10.8.0",
+    "npm": ">=6.0.0",
+    "yarn": ">=1.7.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
