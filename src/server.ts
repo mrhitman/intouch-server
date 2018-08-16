@@ -8,7 +8,6 @@ import * as morgan from 'morgan';
 import * as passport from 'passport';
 import Chat from './services/chat';
 
-
 const app = express();
 const server = http.createServer(app);
 
