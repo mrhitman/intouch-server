@@ -39,16 +39,23 @@ class Chat {
     clients: { [id: number]: Client };
     wss: WebSocket.Server;
 
-    async save(message) {
+    async createChannel(from, to) {
         let channel = await Channel
             .query()
-            .findOne({ from: message.to, to: message.from });
+            .findOne({ from, to });
 
         if (!channel) {
             channel = await Channel
                 .query()
-                .insert({ from: message.to, to: message.from });
+                .insert({ from, to });
         }
+    }
+
+    async save(message) {
+        await Promise.all([
+            this.createChannel(message.to, message.from),
+            this.createChannel(message.from, message.to),
+        ]);
 
         await Message.query()
             .insert({
