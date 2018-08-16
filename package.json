@@ -11,7 +11,12 @@
     "create-migration": "knex migrate:make",
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
-    "migrate:down": "knex migrate:rollback"
+    "migrate:down": "knex migrate:rollback",
+    "postinstall": "yarn compile && yarn migrate && yarn seed"
+  },
+  "engines": {
+    "node": "8",
+    "npm": "6"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
