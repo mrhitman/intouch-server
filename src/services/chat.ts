@@ -31,25 +31,6 @@ class Client {
     };
 
     async send(message) {
-        console.log(message);
-        let channel = await Channel
-            .query()
-            .findOne({ from: this.id, to: message.from });
-
-        if (!channel) {
-            channel = await Channel
-                .query()
-                .insert({ from: this.id, to: message.from });
-        }
-
-        await Message.query()
-            .insert({
-                from: message.from,
-                to: this.id,
-                text: message.text,
-                created_at: moment.now(),
-                viewed: false,
-            })
         this.socket.send(JSON.stringify(message));
     }
 }
@@ -57,6 +38,27 @@ class Client {
 class Chat {
     clients: { [id: number]: Client };
     wss: WebSocket.Server;
+
+    async save(message) {
+        let channel = await Channel
+            .query()
+            .findOne({ from: message.to, to: message.from });
+
+        if (!channel) {
+            channel = await Channel
+                .query()
+                .insert({ from: message.to, to: message.from });
+        }
+
+        await Message.query()
+            .insert({
+                from: message.from,
+                to: message.to,
+                text: message.text,
+                created_at: moment.now(),
+                viewed: false,
+            })
+    }
 
     constructor(server) {
         this.clients = {};
@@ -67,6 +69,7 @@ class Chat {
         subscriber.on('message', (channel, data) => {
             const message = JSON.parse(data);
             const client = this.clients[message.to];
+            this.save(message);
             if (client) {
                 client.send(message);
             }
