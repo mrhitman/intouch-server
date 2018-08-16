@@ -2,7 +2,11 @@ import { forEach } from 'lodash';
 import * as redis from 'redis';
 import { promisify } from 'util';
 
-const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+const client = redis.createClient({
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD,
+});
 const map = {
     get: client.get,
     set: client.set,
