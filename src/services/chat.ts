@@ -31,6 +31,7 @@ class Client {
     };
 
     async send(message) {
+        console.log(message);
         let channel = await Channel
             .query()
             .findOne({ from: this.id, to: message.from });
