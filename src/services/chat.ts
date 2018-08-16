@@ -5,8 +5,8 @@ import { Message } from '../models/message';
 import * as moment from 'moment';
 import { Channel } from '../models/channel';
 
-const publisher = redis.createClient();
-const subscriber = redis.createClient();
+const publisher = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+const subscriber = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
 
 class Client {
     constructor(protected readonly id: number, protected readonly socket: WebSocket, protected readonly chat: Chat) {
