@@ -5,8 +5,8 @@ export default async (req, res, next) => {
     const user = await User
         .query()
         .eager({ profile: true })
-        .where({ id });
-    if (!user.length) {
+        .findById(id);
+    if (!user) {
         return res
             .status(404)
             .end();

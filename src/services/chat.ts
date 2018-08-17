@@ -62,7 +62,7 @@ class Chat {
                 from: message.from,
                 to: message.to,
                 text: message.text,
-                created_at: moment.now(),
+                created_at: moment().utc(),
                 viewed: false,
             })
     }

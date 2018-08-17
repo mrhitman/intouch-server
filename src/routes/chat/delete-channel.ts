@@ -1,10 +1,11 @@
 import { Channel } from "../../models/channel";
 
 export default async (req, res) => {
-    const id = req.params.id;
+    const { from, to } = req.body;
+    console.log(req.query);
     await Channel
         .query()
         .delete()
-        .where({ from: id });
+        .where({ from, to });
     res.json('ok');
 };

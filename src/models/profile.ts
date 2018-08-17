@@ -32,7 +32,7 @@ export class Profile extends Model {
             middle_name: this.middle_name,
             last_name: this.last_name,
             gender: this.gender,
-            birthday: moment(this.birthday * 1000).format('YYYY/MMMM/Do'),
+            birthday: moment(this.birthday).format('Do MMMM YYYY'),
             relationship: this.relationship,
             town: this.town,
             company: this.company,

@@ -7,7 +7,7 @@ exports.up = knex => knex.schema.createTable(tableName, (table) => {
   table.string('last_name', 255);
   table.integer('gender');
   table.integer('relationship');
-  table.bigInteger('birthday').unsigned();
+  table.date('birthday');
   table.string('photo', 255);
   table.string('town', 255);
   table.string('company', 255);

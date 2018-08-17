@@ -5,7 +5,7 @@ exports.up = knex => knex.schema.createTable(tableName, (table) => {
   table.string('name', 255).notNullable();
   table.string('categories', 255).notNullable();
   table.string('picture', 255);
-  table.bigInteger('created_at').unsigned().notNullable();
+  table.timestamp('created_at');
 });
 
 exports.down = knex => knex.schema.dropTable(tableName);

@@ -6,7 +6,7 @@ export class Message extends Model {
     public id: number;
     public from: number;
     public to: number;
-    public created_at: number;
+    public created_at;
     public viewed: boolean;
     public text: string;
 }
