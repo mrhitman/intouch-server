@@ -8,9 +8,7 @@ COPY yarn.lock /opt/yarn.lock
 COPY package.json /opt/package.json
 
 EXPOSE 3001
-
 WORKDIR /opt
-
 RUN yarn
 
 ENTRYPOINT [ "yarn", "start" ]

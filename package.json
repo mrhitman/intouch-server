@@ -12,7 +12,7 @@
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "migrate:down": "knex migrate:rollback",
-    "postinstall": "yarn compile && yarn migrate && yarn seed"
+    "postinstall": "yarn compile && yarn migrate"
   },
   "engines": {
     "node": ">=9.0.0",
