@@ -40,6 +40,7 @@ export class Profile extends Model {
             quote: this.quote,
             hobbies: this.hobbies,
             priorities: this.priorities,
+            photo: this.photo,
         }
     }
 }
