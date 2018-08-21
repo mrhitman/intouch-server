@@ -13,6 +13,7 @@ export class Channel extends Model {
         return {
             id: this.to,
             name: `${this.interlocutor.first_name} ${this.interlocutor.last_name}`,
+            photo: this.interlocutor.photo || 'default.png',
         }
     }
 
