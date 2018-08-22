@@ -24,44 +24,46 @@ export default async (req, res) => {
     const { x, y, width, height } = req.body;
     const photo = req.files.photo;
     try {
-        if (await access(`images/${profile.photo}`, fs.constants.F_OK)) {
-            await unlink(`images/${profile.photo}`);
+        const filePath = `${__dirname}/../../../images`;
+        console.log(filePath);
+        if (await access(`${filePath}/${profile.photo}`, fs.constants.F_OK)) {
+            await unlink(filePath);
         }
         await profile
             .$query()
             .update({ photo: `profile_${profile.user_id}.png` });
-        await photo.mv(`images/origin_${profile.photo}`);
-        const imageInfo = await info(`images/origin_${profile.photo}`);
+        await photo.mv(`${filePath}/origin_${profile.photo}`);
+        const imageInfo = await info(`${filePath}/origin_${profile.photo}`);
         await crop({
-            src: `images/origin_${profile.photo}`,
-            dst: `images/${profile.photo}`,
+            src: `${filePath}/origin_${profile.photo}`,
+            dst: `${filePath}/${profile.photo}`,
             x: (x * imageInfo.width) / 100,
             y: (y * imageInfo.height) / 100,
             cropHeight: (height * imageInfo.height) / 100,
             cropWidth: (width * imageInfo.width) / 100,
         });
         await crop({
-            src: `images/origin_${profile.photo}`,
-            dst: `images/rect_${profile.photo}`,
+            src: `${filePath}/origin_${profile.photo}`,
+            dst: `${filePath}/rect_${profile.photo}`,
             x: (x * imageInfo.width) / 100,
             y: (y * imageInfo.height) / 100,
             cropHeight: (height * imageInfo.height) / 100,
             cropWidth: (height * imageInfo.height) / 100,
         });
         await resize({
-            src: `images/${profile.photo}`,
-            dst: `images/${profile.photo}`,
+            src: `${filePath}/${profile.photo}`,
+            dst: `${filePath}/${profile.photo}`,
             height: 250,
             width: 200,
             ignoreAspectRatio: false,
         });
         await resize({
-            src: `images/rect_${profile.photo}`,
-            dst: `images/mini_${profile.photo}`,
+            src: `${filePath}/rect_${profile.photo}`,
+            dst: `${filePath}/mini_${profile.photo}`,
             height: 50,
             width: 50,
         });
-        await unlink(`images/rect_${profile.photo}`);
+        await unlink(`${filePath}/rect_${profile.photo}`);
         res.json('success');
     } catch (err) {
         console.log(err);
