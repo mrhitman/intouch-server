@@ -25,10 +25,6 @@ export default async (req, res) => {
     const photo = req.files.photo;
     try {
         const filePath = `${__dirname}/../../../images`;
-        console.log(filePath);
-        if (await access(`${filePath}/${profile.photo}`, fs.constants.F_OK)) {
-            await unlink(filePath);
-        }
         await profile
             .$query()
             .update({ photo: `profile_${profile.user_id}.png` });
