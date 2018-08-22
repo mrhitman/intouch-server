@@ -1,6 +1,6 @@
 const tableName = 'profile';
 
-exports.up = knex => knex.schema.createTable(tableName, (table) => {
+exports.up = knex => knex.schema.createTable(tableName, table => {
   table.integer('user_id').notNullable().primary();
   table.string('first_name', 255).notNullable();
   table.string('middle_name', 255).notNullable();

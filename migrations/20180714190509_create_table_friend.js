@@ -1,6 +1,6 @@
 const tableName = 'friend';
 
-exports.up = knex => knex.schema.createTable(tableName, (table) => {
+exports.up = knex => knex.schema.createTable(tableName, table => {
   table.integer('user_id').unsigned().notNullable();
   table.integer('friend_user_id').notNullable();
   table.boolean('deleted').default(false);

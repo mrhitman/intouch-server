@@ -1,6 +1,6 @@
 const tableName = 'user';
 
-exports.up = knex => knex.schema.createTable(tableName, (table) => {
+exports.up = knex => knex.schema.createTable(tableName, table => {
   table.increments('id').primary();
   table.string('email', 255).notNullable().unique();
   table.string('phone', 20).unique();

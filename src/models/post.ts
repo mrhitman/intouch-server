@@ -12,6 +12,22 @@ export class Post extends Model {
     public meta: Meta;
     public author: Profile;
 
+    toJSON() {
+        const meta = this.meta;
+        return {
+            id: this.id,
+            header: this.header,
+            content: this.content,
+            likes: meta.likes,
+            dislikes: meta.dislikes,
+            views: meta.views,
+            created_at: meta.created_at,
+            updated_at: meta.updated_at,
+            author_id: this.author_user_id,
+            author: this.author,
+        }
+    }
+
     static get relationMappings() {
         return {
             meta: {
@@ -22,7 +38,7 @@ export class Post extends Model {
                     to: "meta.item_id",
                 },
             },
-            profile: {
+            author: {
                 relation: Model.HasOneRelation,
                 modelClass: Profile,
                 join: {
