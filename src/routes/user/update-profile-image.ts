@@ -4,7 +4,6 @@ import { Profile } from '../../models/profile';
 import { info, crop, resize } from 'easyimage';
 
 const unlink = promisify(fs.unlink);
-const access = promisify(fs.access);
 
 export default async (req, res) => {
     const id = req.params.id;
