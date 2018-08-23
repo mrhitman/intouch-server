@@ -15,11 +15,13 @@ export class Profile extends Model {
     public middle_name: string;
     public last_name: string;
     public gender: Gender;
-    public birthday: number;
-    public town: string;
+    public birthday: string;
+    public home_town: string;
+    public city: string;
     public relationship: number;
     public company: string;
     public language: string;
+    public books: string;
     public hobbies: string;
     public priorities: string;
     public quote: string;
@@ -34,13 +36,16 @@ export class Profile extends Model {
             gender: this.gender,
             birthday: moment(this.birthday).format('Do MMMM YYYY'),
             relationship: this.relationship,
-            town: this.town,
+            home_town: this.home_town,
+            city: this.city,
             company: this.company,
             language: this.language,
             quote: this.quote,
+            books: this.hobbies,
             hobbies: this.hobbies,
             priorities: this.priorities,
             photo: this.photo || 'default.png',
+            photo_mini: `mini_${this.photo || 'default.png'}`,
         }
     }
 }

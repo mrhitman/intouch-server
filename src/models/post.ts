@@ -6,11 +6,11 @@ import { Profile } from './profile';
 export class Post extends Model {
     public static tableName = 'post';
     public id: number;
-    public author_user_id: number;
+    public author_id: number;
+    public owner_id: number;
     public header: string;
     public content: string;
     public meta: Meta;
-    public author: Profile;
 
     toJSON() {
         const meta = this.meta;
@@ -23,8 +23,8 @@ export class Post extends Model {
             views: meta.views,
             created_at: meta.created_at,
             updated_at: meta.updated_at,
-            author_id: this.author_user_id,
-            author: this.author,
+            author_id: this.author_id,
+            owner_id: this.owner_id,
         }
     }
 
@@ -42,7 +42,7 @@ export class Post extends Model {
                 relation: Model.HasOneRelation,
                 modelClass: Profile,
                 join: {
-                    from: "post.author_user_id",
+                    from: "post.author_id",
                     to: "profile.user_id",
                 },
             }

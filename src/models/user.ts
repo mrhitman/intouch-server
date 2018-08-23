@@ -2,6 +2,11 @@ import { Model } from 'objection';
 import { db } from '../services/db';
 import { Profile } from './profile';
 
+enum DeactivatedStatus {
+    deleted = 'deleted',
+    banned = 'banned',
+}
+
 export class User extends Model {
     public static tableName = 'user';
     public id: number;
@@ -9,7 +14,8 @@ export class User extends Model {
     public phone: string;
     public password: string;
     public profile: Profile;
-    public created_at: number;
+    public deactivated: DeactivatedStatus;
+    public created_at: string;
 
     toJSON() {
         return {
@@ -27,8 +33,8 @@ export class User extends Model {
                 relation: Model.HasOneRelation,
                 modelClass: Profile,
                 join: {
-                    from: "user.id",
-                    to: "profile.user_id",
+                    from: 'user.id',
+                    to: 'profile.user_id',
                 },
             }
         };

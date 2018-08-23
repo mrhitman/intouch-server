@@ -5,6 +5,7 @@ exports.up = knex => knex.schema.createTable(tableName, table => {
   table.string('email', 255).notNullable().unique();
   table.string('phone', 20).unique();
   table.string('password', 255).notNullable();
+  table.enum('deactivated', ['banned', 'deleted']);
   table.timestamp('created_at');
 });
 

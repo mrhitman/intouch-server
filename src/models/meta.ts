@@ -3,12 +3,13 @@ import { db } from '../services/db';
 
 export class Meta extends Model {
     public static tableName = 'meta';
+    public static idColumn = 'item_id';
     public item_id: number;
     public likes: number;
     public dislikes: number;
     public views: number;
-    public created_at: number;
-    public updated_at: number;
+    public created_at: string;
+    public updated_at: string;
 
     toJSON() {
         return {
