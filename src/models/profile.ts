@@ -29,6 +29,7 @@ export class Profile extends Model {
 
     toJSON() {
         return {
+            id: this.user_id,
             name: `${this.first_name} ${this.middle_name}`,
             first_name: this.first_name,
             middle_name: this.middle_name,
