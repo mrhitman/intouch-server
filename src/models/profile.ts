@@ -19,6 +19,7 @@ export class Profile extends Model {
     public home_town: string;
     public city: string;
     public relationship: number;
+    public country: string;
     public company: string;
     public language: string;
     public books: string;
@@ -39,6 +40,7 @@ export class Profile extends Model {
             relationship: this.relationship,
             home_town: this.home_town,
             city: this.city,
+            country: this.country,
             company: this.company,
             language: this.language,
             quote: this.quote,

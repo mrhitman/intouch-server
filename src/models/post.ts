@@ -1,7 +1,6 @@
 import { Model } from 'objection';
 import { db } from '../services/db';
 import { Meta } from './meta';
-import { Profile } from './profile';
 
 export class Post extends Model {
     public static tableName = 'post';
@@ -38,14 +37,6 @@ export class Post extends Model {
                     to: "meta.item_id",
                 },
             },
-            author: {
-                relation: Model.HasOneRelation,
-                modelClass: Profile,
-                join: {
-                    from: "post.author_id",
-                    to: "profile.user_id",
-                },
-            }
         };
     }
 }
