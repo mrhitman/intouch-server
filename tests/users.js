@@ -51,7 +51,7 @@ describe('User login', () => {
         expect(response.status).eq(404);
     })
 
-    it('Logout', async () => {
+    it('Logout/Command with token', async () => {
         const auth = await request(app)
             .post('/user/login')
             .send({ email: 'test@test.com', password: '1' });
@@ -64,5 +64,5 @@ describe('User login', () => {
 })
 
 describe('Registration', () => {
-
+    
 });
