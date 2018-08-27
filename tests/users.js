@@ -4,33 +4,50 @@ const issueToken = require('./helpers/issueToken');
 const app = require('../dist/server').default();
 
 describe('User login', () => {
-    it('Successfully login', async () => {
+    const id = 1;
 
+    it('Successfully login', async () => {
         const response = await request(app)
             .post('/user/login')
             .send({ email: 'test@test.com', password: '1' });
 
-        expect(response.status).to.be.eq(200);
-        expect(response.body.token).to.be.a('string');
-        expect(response.body.refreshToken).to.be.a('string');
-    });
+        expect(response.status).eq(200);
+        expect(response.body.token).a('string');
+        expect(response.body.refreshToken).a('string');
+    })
 
     it('Invalid login', async () => {
         const response = await request(app)
             .post('/user/login')
             .send({ email: 'INVALID', password: 'INVALID' });
-        expect(response.status).to.be.eq(403);
-    });
+        expect(response.status).eq(403);
+    })
 
     it('Get error on expired token', async () => {
-        const token = issueToken({ id: 1 }, { expiresIn: '0ms' });
+        const token = issueToken({ id }, { expiresIn: '0ms' });
         const response = await request(app)
-            .post('/user/profile/1')
+            .post(`/user/profile/${id}`)
             .set('Authorization', `Bearer ${token}`);
-        expect(response.status).to.be.eq(401);
-    });
+        expect(response.status).eq(401);
+    })
 
     it('Get new token', async () => {
-        const token = issueToken({ id: 1 }, { expiresIn: '0ms' });
-    });
+        const auth = await request(app)
+            .post('/user/login')
+            .send({ email: 'test@test.com', password: '1' });
+        expect(auth.status).eq(200);
+        const response = await request(app)
+            .post('/user/refresh')
+            .send({ token: auth.body.refreshToken, user_id: id });
+        expect(response.status).eq(200);
+        expect(response.body.token).a('string');
+        expect(response.body.refreshToken).not.eq(auth.body.refreshToken);
+    })
+
+    it('New token with invalid token', async () => {
+        const response = await request(app)
+            .post('/user/refresh')
+            .send({ token: 'INVALID', user_id: id });
+        expect(response.status).eq(404);
+    })
 });

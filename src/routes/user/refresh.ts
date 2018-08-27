@@ -7,15 +7,15 @@ export default async (req, res, next) => {
     const { token, user_id } = req.body;
     let refreshToken = await RefreshToken
         .query()
-        .findOne({ user_id, refreshToken: token });
+        .findOne({ user_id, token });
 
     if (!refreshToken) {
-        return next(new HttpError('Invalid refresh token', 403));
+        return next(new HttpError('Invalid refresh token', 404));
     }
 
-    refreshToken = await RefreshToken
-        .query()
-        .insertAndFetch({ user_id, token: uuid() })
+    await refreshToken
+        .$query()
+        .update({ user_id, token: uuid() })
         .execute();
 
     const newToken = jwt.sign({ id: user_id }, process.env.SALT, { expiresIn: '1h' });
