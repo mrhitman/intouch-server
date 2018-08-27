@@ -12,12 +12,13 @@
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "migrate:down": "knex migrate:rollback",
-    "postinstall": "yarn compile && yarn migrate"
+    "postinstall": "yarn compile && yarn migrate",
+    "test": "mocha tests"
   },
   "engines": {
-    "node": "9.8.0",
-    "npm": "5.8.0",
-    "yarn": "1.7.0"
+    "node": ">=9.8.0",
+    "npm": ">=5.8.0",
+    "yarn": ">=1.7.0"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -38,6 +39,7 @@
     "pg": "^7.4.3",
     "redis": "^2.8.0",
     "typescript": "^2.9.2",
+    "uuid": "^3.3.2",
     "ws": "^6.0.0"
   },
   "devDependencies": {
@@ -48,6 +50,7 @@
     "eslinter": "^3.2.1",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
   }
 }

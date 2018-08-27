@@ -1,11 +1,12 @@
-import * as jwt from 'jsonwebtoken';
-import { User } from '../../models/user';
 import * as crypto from 'crypto';
+import * as jwt from 'jsonwebtoken';
+import * as uuid from 'uuid';
+import HttpError from '../../error';
+import { User } from '../../models/user';
 
 export default async (req, res, next) => {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
-    const password = req.body.password;
     let hash = crypto.createHmac('sha256', process.env.SALT);
     hash.update(password);
 
@@ -15,14 +16,13 @@ export default async (req, res, next) => {
         .findOne({ email, password: hash.digest('hex') });
 
     if (!user) {
-        return next(new Error(`No such user`));
+        return next(new HttpError(`No such user`, 403));
     }
-    const token = jwt.sign({
-        id: user.id
-    }, process.env.SALT, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id }, process.env.SALT, { expiresIn: '1h' });
 
     res.json({
-        token: `Bearer ${token}`,
-        user
+        token,
+        refreshToken: uuid(),
+        user,
     });
 };
