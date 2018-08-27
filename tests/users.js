@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 const request = require('supertest');
+const issueToken = require('./helpers/issueToken');
 const app = require('../dist/server').default();
 
 describe('User login', () => {
@@ -21,9 +22,15 @@ describe('User login', () => {
         expect(response.status).to.be.eq(403);
     });
 
-    it('Get 401 status on expaired token', async () => {
+    it('Get error on expired token', async () => {
+        const token = issueToken({ id: 1 }, { expiresIn: '0ms' });
         const response = await request(app)
-            .post('/user/login')
-            .send({ email: 'INVALID', password: 'INVALID' });
+            .post('/user/profile/1')
+            .set('Authorization', `Bearer ${token}`);
+        expect(response.status).to.be.eq(401);
+    });
+
+    it('Get new token', async () => {
+        const token = issueToken({ id: 1 }, { expiresIn: '0ms' });
     });
 });

@@ -2,6 +2,7 @@ import * as crypto from 'crypto';
 import * as jwt from 'jsonwebtoken';
 import * as uuid from 'uuid';
 import HttpError from '../../error';
+import { RefreshToken } from '../../models/refresh-token';
 import { User } from '../../models/user';
 
 export default async (req, res, next) => {
@@ -20,9 +21,20 @@ export default async (req, res, next) => {
     }
     const token = jwt.sign({ id: user.id }, process.env.SALT, { expiresIn: '1h' });
 
+    let refreshToken = await RefreshToken
+        .query()
+        .findOne({ user_id: user.id });
+
+    if (!refreshToken) {
+        refreshToken = await RefreshToken
+            .query()
+            .insertAndFetch({ user_id: user.id, token: uuid() })
+            .execute();
+    }
+
     res.json({
         token,
-        refreshToken: uuid(),
+        refreshToken: refreshToken.token,
         user,
     });
 };
