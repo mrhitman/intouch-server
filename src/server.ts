@@ -7,6 +7,7 @@ import * as fileUpload from 'express-fileupload';
 import * as http from 'http';
 import * as morgan from 'morgan';
 import * as passport from 'passport';
+import jwtStrategy from './middlewares/passport';
 import Chat from './services/chat';
 
 function createServer() {
@@ -24,7 +25,7 @@ function createServer() {
     app.use(bodyParser.json());
 
     app.use(passport.initialize());
-    require('./middlewares/passport').default(passport);
+    jwtStrategy(passport);
 
     app.use('/chat', require('./routes/chat').default);
     app.use('/user', require('./routes/user').default);

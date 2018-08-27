@@ -9,7 +9,9 @@ const opts = {
 
 export default passport => {
     passport.use(new Strategy(opts, async (payload, done) => {
-        const user = User.query().findOne({ id: payload.id });
+        const user = await User
+            .query()
+            .findById(payload.id);
         return user ? done(null, user) : done(null, false);
     }));
 };

@@ -50,4 +50,19 @@ describe('User login', () => {
             .send({ token: 'INVALID', user_id: id });
         expect(response.status).eq(404);
     })
+
+    it('Logout', async () => {
+        const auth = await request(app)
+            .post('/user/login')
+            .send({ email: 'test@test.com', password: '1' });
+        expect(auth.status).eq(200);
+        const response = await request(app)
+            .post('/user/logout')
+            .set('Authorization', `Bearer ${auth.body.token}`);
+        expect(response.status).eq(200);
+    })
+})
+
+describe('Registration', () => {
+
 });
