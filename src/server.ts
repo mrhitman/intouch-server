@@ -31,6 +31,7 @@ function createServer() {
     app.use('/user', require('./routes/user').default);
     app.use('/friend', require('./routes/friend').default);
     app.use('/posts', require('./routes/posts').default);
+    app.use('/likes', require('./routes/like').default);
 
     app.use((err, req, res, next) => {
         res.status(err.status || 400);

@@ -1,12 +1,13 @@
 import { Meta } from '../../models/meta';
-import { raw } from 'objection';
 
 
 export default async (req, res) => {
     const { item_id, type } = req.body;
-    const meta = await Meta
+    console.log(type, item_id);
+    await Meta
         .query()
-        .updateAndFetchById(item_id, raw(`${type} = ${type} + 1`))
+        .update({ [type]: Meta.raw(`${type} + 1`) })
+        .where({ item_id })
         .execute();
-    res.json({ meta });
+    res.json('ok');
 }

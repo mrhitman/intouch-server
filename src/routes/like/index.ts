@@ -10,9 +10,9 @@ function routeFabric(type, route) {
     });
 }
 
-routeFabric('like', 'add');
-routeFabric('like', 'delete');
-routeFabric('dislike', 'add');
-routeFabric('dislike', 'delete');
+routeFabric('likes', 'add');
+routeFabric('likes', 'delete');
+routeFabric('dislikes', 'add');
+routeFabric('dislikes', 'delete');
 
 export default router;
