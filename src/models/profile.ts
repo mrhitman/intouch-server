@@ -18,7 +18,7 @@ export class Profile extends Model {
     public birthday: string;
     public home_town: string;
     public city: string;
-    public relationship: number;
+    public relation: number;
     public country: string;
     public company: string;
     public language: string;
@@ -37,7 +37,7 @@ export class Profile extends Model {
             last_name: this.last_name,
             gender: this.gender,
             birthday: moment(this.birthday).format('Do MMMM YYYY'),
-            relationship: this.relationship,
+            relation: this.relation,
             home_town: this.home_town,
             city: this.city,
             country: this.country,

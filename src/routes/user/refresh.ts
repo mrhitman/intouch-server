@@ -4,10 +4,10 @@ import HttpError from '../../error';
 import { RefreshToken } from '../../models/refresh-token';
 
 export default async (req, res, next) => {
-    const { token, user_id } = req.body;
+    const { token } = req.body;
     let refreshToken = await RefreshToken
         .query()
-        .findOne({ user_id, token });
+        .findOne({ token });
 
     if (!refreshToken) {
         return next(new HttpError('Invalid refresh token', 404));
@@ -15,13 +15,13 @@ export default async (req, res, next) => {
 
     await refreshToken
         .$query()
-        .update({ user_id, token: uuid() })
+        .update({ token: uuid() })
         .execute();
 
-    const newToken = jwt.sign({ id: user_id }, process.env.SALT, { expiresIn: '1h' });
+    const newToken = jwt.sign({ id: refreshToken.user_id }, process.env.SALT, { expiresIn: '1h' });
 
     res.json({
         token: newToken,
-        refreshToken,
+        refreshToken: refreshToken.token,
     });
 };
