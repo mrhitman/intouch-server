@@ -1,4 +1,5 @@
 import * as knex from "knex";
+import { transaction as trx } from "objection";
 
 export const db = knex({
     client: "postgres",
@@ -12,3 +13,5 @@ export const db = knex({
     },
     pool: { min: 24, max: 36 },
 });
+
+export const transaction = callback => trx(db, callback)
