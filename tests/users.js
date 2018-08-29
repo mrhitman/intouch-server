@@ -88,4 +88,22 @@ describe('Registration', () => {
             });
         expect(response.status).eq(201);
     });
+
+    it('without params', async () => {
+        const response = await request(app)
+            .post('/user/register')
+            .send({})
+        expect(response.status).eq(400);
+    });
+
+    it('with exist user', async () => {
+        const response = await request(app)
+            .post('/user/register')
+            .send({
+                email: 'test@test.com',
+                password: '1',
+                first_name: 'test'
+            })
+        expect(response.status).eq(409);
+    });
 });

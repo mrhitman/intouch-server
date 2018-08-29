@@ -9,9 +9,9 @@ import { db } from '../../services/db';
 
 const schema = joi.object()
     .keys({
-        email: joi.string().email(),
-        password: joi.string(),
-        first_name: joi.string(),
+        email: joi.string().email().required(),
+        password: joi.string().required(),
+        first_name: joi.string().required(),
         middle_name: joi.string(),
         last_name: joi.string(),
         gender: joi.number(),
@@ -27,13 +27,11 @@ const schema = joi.object()
     });
 
 export default async (req, res, next) => {
-
-    const { errors, values } = await joi.validate(req.body, schema)
-    if (errors) {
-        return next(new HttpError(JSON.stringify(errors, values), 400));
+    const validation = joi.validate(req.body, schema);
+    if (validation.error) {
+        return next(new HttpError(validation.error, 400));
     }
     const { email, password } = req.body;
-
     if (await User.query().findOne({ email })) {
         return next(new HttpError('User already exists', 409));
     }
@@ -41,7 +39,7 @@ export default async (req, res, next) => {
     let hash = crypto.createHmac('sha256', process.env.SALT);
     hash.update(password);
 
-    transaction(db, async trx => {
+    await transaction(db, async trx => {
         const user = await User
             .query(trx)
             .insert({
