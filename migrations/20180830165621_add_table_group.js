@@ -5,6 +5,7 @@ exports.up = knex => knex.schema.createTable(tableName, table => {
     table.integer('title');
     table.enum('type', ['page', 'group', 'business', 'community', 'schedule']);
     table.integer('description');
+    table.integer('image_id');
     table.timestamp('created_at');
 });
 

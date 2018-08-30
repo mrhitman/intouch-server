@@ -7,6 +7,7 @@ import * as fileUpload from 'express-fileupload';
 import * as http from 'http';
 import * as morgan from 'morgan';
 import * as passport from 'passport';
+import * as helmet from 'helmet';
 import jwtStrategy from './middlewares/passport';
 import Chat from './services/chat';
 
@@ -17,6 +18,7 @@ function createServer() {
     new Chat(server);
     app.set("x-powered-by", false);
     app.use(cors());
+    app.use(helmet());
     app.use(fileUpload());
     app.use(express.static('web'));
     app.use(express.static('images'));
@@ -46,7 +48,8 @@ function createServer() {
 }
 
 if (!module.parent) {
-    createServer().listen(process.env.PORT || 3000, () => console.log('server up'));
+    createServer()
+        .listen(process.env.PORT || 3000, (server) => console.log('server up'));
 
 }
 export default createServer;
