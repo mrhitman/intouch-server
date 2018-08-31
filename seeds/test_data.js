@@ -52,5 +52,21 @@ exports.seed = knex => {
             { user_id: 3, friend_user_id: 1 }
           ]);
         });
+    })
+    .then(() => {
+      return knex("list")
+        .del()
+        .then(() => {
+          const profileAlbum = {
+            title: "Profile photo album",
+            type: "images",
+            visibility: "all"
+          };
+          return knex("list").insert([
+            profileAlbum,
+            profileAlbum,
+            profileAlbum
+          ]);
+        });
     });
 };
