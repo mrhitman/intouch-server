@@ -1,7 +1,7 @@
 import { Model } from "objection";
 import { db } from "../services/db";
 
-export class Message extends Model {
+export class ChatMessage extends Model {
   public static tableName = "message";
   public id: number;
   public from: number;
@@ -11,4 +11,4 @@ export class Message extends Model {
   public text: string;
 }
 
-Message.knex(db);
+ChatMessage.knex(db);

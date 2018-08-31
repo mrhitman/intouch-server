@@ -7,6 +7,9 @@ enum FriendStatus {
   muted = "muted"
 }
 
+/**
+ * User social relation
+ */
 export class Friend extends Model {
   public static tableName = "friend";
   public user_id: number;

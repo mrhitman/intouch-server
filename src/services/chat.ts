@@ -1,8 +1,8 @@
 import * as redis from "redis";
 import * as WebSocket from "ws";
-import { Message } from "../models/message";
+import { ChatMessage } from "../models/chat-message";
 import * as moment from "moment";
-import { Channel } from "../models/channel";
+import { ChatChannel } from "../models/chat-channel";
 
 const publisher = redis.createClient({
   port: process.env.REDIS_PORT,
@@ -43,10 +43,10 @@ class Chat {
   wss: WebSocket.Server;
 
   async createChannel(from, to) {
-    let channel = await Channel.query().findOne({ from, to });
+    let channel = await ChatChannel.query().findOne({ from, to });
 
     if (!channel) {
-      channel = await Channel.query().insert({ from, to });
+      channel = await ChatChannel.query().insert({ from, to });
     }
   }
 
@@ -56,7 +56,7 @@ class Chat {
       this.createChannel(message.from, message.to)
     ]);
 
-    await Message.query().insert({
+    await ChatMessage.query().insert({
       from: message.from,
       to: message.to,
       text: message.text,

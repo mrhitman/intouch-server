@@ -3,27 +3,23 @@ import { db } from "../services/db";
 import { Meta } from "./meta";
 import { Item } from "./item";
 
-export class Post extends Item {
+enum MediaType {
+  image = "image",
+  song = "song",
+  document = "document"
+}
+
+export class Media extends Item {
   public static tableName = "post";
-  public author_id: number;
-  public owner_id: number;
-  public header: string;
-  public content: string;
+  public title: string;
+  public type: MediaType;
   public meta: Meta;
 
   toJSON() {
-    const meta = this.meta;
     return {
       id: this.id,
-      header: this.header,
-      content: this.content,
-      likes: meta.likes,
-      dislikes: meta.dislikes,
-      views: meta.views,
-      created_at: meta.created_at,
-      updated_at: meta.updated_at,
-      author_id: this.author_id,
-      owner_id: this.owner_id
+      title: this.title,
+      created_at: this.created_at
     };
   }
 
@@ -41,4 +37,4 @@ export class Post extends Item {
   }
 }
 
-Post.knex(db);
+Media.knex(db);

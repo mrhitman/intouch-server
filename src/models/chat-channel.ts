@@ -2,7 +2,7 @@ import { Model } from "objection";
 import { db } from "../services/db";
 import { Profile } from "./profile";
 
-export class Channel extends Model {
+export class ChatChannel extends Model {
   public static tableName = "chat_channel";
   public id: number;
   public from: number;
@@ -31,4 +31,4 @@ export class Channel extends Model {
   }
 }
 
-Channel.knex(db);
+ChatChannel.knex(db);
