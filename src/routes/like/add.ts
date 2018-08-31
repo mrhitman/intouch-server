@@ -1,13 +1,11 @@
-import { Meta } from '../../models/meta';
-
+import { Meta } from "../../models/meta";
 
 export default async (req, res) => {
-    const { item_id, type } = req.body;
+  const { item_id, type } = req.body;
 
-    await Meta
-        .query()
-        .update({ [type]: Meta.raw(`${type} + 1`) })
-        .where({ item_id })
-        .execute();
-    res.json('ok');
-}
+  await Meta.query()
+    .update({ [type]: Meta.raw(`${type} + 1`) })
+    .where({ item_id })
+    .execute();
+  res.json("ok");
+};

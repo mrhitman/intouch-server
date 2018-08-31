@@ -1,3 +1,3 @@
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
-module.exports = (data, options = {}) => jwt.sign(data, 'test', options);
+module.exports = (data, options = {}) => jwt.sign(data, "test", options);

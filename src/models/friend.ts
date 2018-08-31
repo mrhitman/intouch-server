@@ -1,29 +1,35 @@
-import { Model } from 'objection';
-import { db } from '../services/db';
+import { Model } from "objection";
+import { db } from "../services/db";
+
+enum FriendStatus {
+  default = "default",
+  banned = "banned",
+  muted = "muted"
+}
 
 export class Friend extends Model {
-    public static tableName = 'friend';
-    public user_id: number;
-    public friend_user_id: number;
-    public deleted: number;
+  public static tableName = "friend";
+  public user_id: number;
+  public friend_user_id: number;
+  public status: FriendStatus;
 
-    static get idColumn() {
-      return ['user_id', 'friend_user_id'];
-    }
+  static get idColumn() {
+    return ["user_id", "friend_user_id"];
+  }
 
-    static get jsonSchema() {
-        const properties = {
-          user_id: { type: 'integer' },
-          friend_user_id: { type: 'integer' },
-          deleted: { enum: [0, 1] }
-        };
-        return {
-          type: 'object',
-          properties,
-          required: Object.keys(properties),
-          additionalProperties: false,
-        };
-      }
+  static get jsonSchema() {
+    const properties = {
+      user_id: { type: "integer" },
+      friend_user_id: { type: "integer" },
+      status: { type: "string" }
+    };
+    return {
+      type: "object",
+      properties,
+      required: Object.keys(properties),
+      additionalProperties: false
+    };
+  }
 }
 
 Friend.knex(db);

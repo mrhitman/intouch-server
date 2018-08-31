@@ -1,15 +1,10 @@
-import { User } from '../../models/user';
+import { Profile } from "../../models/profile";
 
-export default async (req, res, next) => {
-    const id = req.params.id;
-    const user = await User
-        .query()
-        .eager({ profile: true })
-        .findById(id);
-    if (!user) {
-        return res
-            .status(404)
-            .end();
-    }
-    res.json(user);
+export default async (req, res) => {
+  const id = req.params.id;
+  const user = await Profile.query().findById(id);
+  if (!user) {
+    return res.status(404).end();
+  }
+  res.json(user);
 };

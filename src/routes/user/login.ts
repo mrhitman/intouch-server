@@ -1,40 +1,37 @@
-import * as crypto from 'crypto';
-import * as jwt from 'jsonwebtoken';
-import * as uuid from 'uuid';
-import HttpError from '../../error';
-import { RefreshToken } from '../../models/refresh-token';
-import { User } from '../../models/user';
+import * as crypto from "crypto";
+import * as jwt from "jsonwebtoken";
+import * as uuid from "uuid";
+import HttpError from "../../error";
+import { RefreshToken } from "../../models/refresh-token";
+import { Profile } from "../../models/profile";
 
 export default async (req, res, next) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    let hash = crypto.createHmac('sha256', process.env.SALT);
-    hash.update(password);
+  let hash = crypto.createHmac("sha256", process.env.SALT);
+  hash.update(password);
 
-    const user = await User
-        .query()
-        .eager('[profile]')
-        .findOne({ email, password: hash.digest('hex') });
+  const user = await Profile.query()
+    .findOne({ email, password: hash.digest("hex") });
 
-    if (!user) {
-        return next(new HttpError(`No such user`, 403));
-    }
-    const token = jwt.sign({ id: user.id }, process.env.SALT, { expiresIn: '1h' });
+  if (!user) {
+    return next(new HttpError(`No such user`, 403));
+  }
+  const token = jwt.sign({ id: user.id }, process.env.SALT, {
+    expiresIn: "1h"
+  });
 
-    let refreshToken = await RefreshToken
-        .query()
-        .findOne({ user_id: user.id });
+  let refreshToken = await RefreshToken.query().findOne({ user_id: user.id });
 
-    if (!refreshToken) {
-        refreshToken = await RefreshToken
-            .query()
-            .insertAndFetch({ user_id: user.id, token: uuid() })
-            .execute();
-    }
+  if (!refreshToken) {
+    refreshToken = await RefreshToken.query()
+      .insertAndFetch({ user_id: user.id, token: uuid() })
+      .execute();
+  }
 
-    res.json({
-        token,
-        refreshToken: refreshToken.token,
-        user,
-    });
+  res.json({
+    token,
+    refreshToken: refreshToken.token,
+    user
+  });
 };
