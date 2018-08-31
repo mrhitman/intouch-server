@@ -1,5 +1,5 @@
 import HttpError from "../../error";
-import { Friend } from "../../models/friend";
+import { Friend, FriendStatus } from "../../models/friend";
 
 export default async (req, res, next) => {
   const { id, friend_id } = req.body;
@@ -21,6 +21,7 @@ export default async (req, res, next) => {
   await Friend.query().insert({
     user_id: id,
     friend_user_id: friend_id,
+    status: FriendStatus.default,
   });
 
   res.json({ success: true });

@@ -1,7 +1,7 @@
 import { Model } from "objection";
 import { db } from "../services/db";
 
-enum FriendStatus {
+export enum FriendStatus {
   default = "default",
   banned = "banned",
   muted = "muted"

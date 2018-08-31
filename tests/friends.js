@@ -3,7 +3,7 @@ const request = require("supertest");
 const issueToken = require("./helpers/issueToken");
 const app = require("../dist/server").default();
 
-describe.skip("Friend", () => {
+describe("Friend", () => {
   it("unfollow", async () => {
     const auth = await request(app)
       .post("/user/login")
